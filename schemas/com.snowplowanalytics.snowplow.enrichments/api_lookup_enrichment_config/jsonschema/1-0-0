@@ -1,0 +1,149 @@
+{
+    "$schema": "http://json-schema.org/schema#",
+    "description": "Schema for API lookup enrichment configuration",
+    "self": {
+        "vendor": "com.snowplowanalytics.snowplow.enrichments",
+        "name": "api_lookup_enrichment_config",
+        "format": "jsonschema",
+        "version": "1-0-0"
+    },
+
+    "type": "object",
+    "properties": {
+        "vendor": {
+            "type": "string"
+        },
+        "name": {
+            "type": "string"
+        },
+        "enabled": {
+            "type": "boolean"
+        },
+
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "inputs": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "key": {
+                                "type": "string"
+                            },
+                            "pojo": {
+                                "type": "object",
+                                "properties": {
+                                    "field": {
+                                        "type": "string",
+                                        "enum": ["app_id", "base_currency", "br_colordepth", "br_cookies", "br_family", "br_features_director", "br_features_flash", "br_features_gears", "br_features_java", "br_features_pdf", "br_features_quicktime", "br_features_realplayer", "br_features_silverlight", "br_features_windowsmedia", "br_lang", "br_name", "br_renderengine", "br_type", "br_version", "br_viewheight", "br_viewwidth", "collector_tstamp", "contexts", "derived_contexts", "derived_tstamp", "doc_charset", "doc_height", "doc_width", "domain_sessionid", "domain_sessionidx", "domain_userid", "dvce_created_tstamp", "dvce_ismobile", "dvce_screenheight", "dvce_screenwidth", "dvce_sent_tstamp", "dvce_type", "etl_tags", "etl_tstamp", "event", "event_fingerprint", "event_format", "event_id", "event_name", "event_vendor", "event_version", "geo_city", "geo_country", "geo_latitude", "geo_longitude", "geo_region", "geo_region_name", "geo_timezone", "geo_zipcode", "ip_domain", "ip_isp", "ip_netspeed", "ip_organization", "mkt_campaign", "mkt_clickid", "mkt_content", "mkt_medium", "mkt_network", "mkt_source", "mkt_term", "name_tracker", "network_userid", "os_family", "os_manufacturer", "os_name", "os_timezone", "page_referrer", "page_title", "page_url", "page_urlfragment", "page_urlhost", "page_urlpath", "page_urlport", "page_urlquery", "page_urlscheme", "platform", "pp_xoffset_max", "pp_xoffset_min", "pp_yoffset_max", "pp_yoffset_min", "refr_domain_userid", "refr_dvce_tstamp", "refr_medium", "refr_source", "refr_term", "refr_urlfragment", "refr_urlhost", "refr_urlpath", "refr_urlport", "refr_urlquery", "refr_urlscheme", "se_action", "se_category", "se_label", "se_property", "se_value", "ti_category", "ti_currency", "ti_name", "ti_orderid", "ti_price", "ti_price_base", "ti_quantity", "ti_sku", "tr_affiliation", "tr_city", "tr_country", "tr_currency", "tr_orderid", "tr_shipping", "tr_shipping_base", "tr_state", "tr_tax", "tr_tax_base", "tr_total", "tr_total_base", "true_tstamp", "txn_id", "unstruct_event", "user_fingerprint", "user_id", "user_ipaddress", "useragent", "v_collector", "v_etl", "v_tracker"]
+                                    }
+                                },
+                                "additionalProperties": false
+                            },
+                            "json": {
+                                "type": "object",
+                                "properties": {
+                                    "field": {
+                                        "type": "string",
+                                        "enum": ["unstruct_event", "contexts", "derived_contexts"]
+                                    },
+                                  "schemaCriterion": {
+                                      "type": "string"
+                                  },
+                                  "jsonPath": {
+                                      "type": "string"
+                                  }
+                                },
+                                "additionalProperties": false
+                            }
+                        },
+                        "additionalProperties": false,
+                        "minProperties": 2,
+                        "maxProperties": 2,
+                        "required": ["key"]
+                    }
+                },
+                "api": {
+                    "type": "object",
+                    "properties": {
+                        "http": {
+                            "type": "object",
+                            "properties": {
+                                "method": {
+                                    "type": "string",
+                                    "enum": ["GET", "POST", "PUT", "DELETE"]
+                                },
+                                "uri": {
+                                    "type": "string",
+                                    "format": "uri"
+                                },
+                                "authentication": {
+                                    "type": "object",
+                                    "properties": {
+                                        "http-basic": {
+                                            "type": "object",
+                                            "properties": {
+                                                "username": {
+                                                    "type": "string",
+                                                    "minLength": 1
+                                                },
+                                                "password": {
+                                                    "type": "string",
+                                                    "minLength": 1
+                                                }
+                                            },
+                                            "additionalProperties": false
+                                        }
+                                    },
+                                    "additionalProperties": false
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "output": {
+                    "type": "object",
+                    "properties": {
+                        "json": {
+                            "type": "object",
+                            "properties": {
+                                "jsonPath": {
+                                    "type": "string"
+                                },
+                                "schema": {
+                                    "type": "string"
+                                }
+                            },
+                            "additionalProperties": false
+                        }
+                    },
+                    "additionalProperties": false
+                },
+                "cache": {
+                    "type": "object",
+                    "properties": {
+                        "size": {
+                            "type": "integer",
+                            "minimum": 0
+                        },
+                        "ttl": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 86400
+                        }
+                    },
+                    "additionalProperties": false,
+                    "required": ["size", "ttl"]
+                }
+            },
+            "additionalProperties": false,
+            "required": ["inputs", "api", "output", "cache"]
+        }
+    },
+    "additionalProperties": false,
+    "required": ["name", "vendor", "enabled", "parameters"]
+}
+
